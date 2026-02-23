@@ -27,3 +27,16 @@ def get_secret_word() -> str:
     """Get a random secret word"""
     logger.info("Tool called: get_secret_word()")
     return random.choice(["apple", "banana", "cherry"])
+
+@mcp.tool()
+def get_current_weather(city: str) -> str:
+    """Get current weather for a city"""
+    logger.info(f"Tool called: get_current_weather({city})")
+try:
+        endpoint = "https://wttr.in"
+        response = requests.get(f"{endpoint}/{city}", timeout=10)
+        response.raise_for_status()
+        return response.text
+    except requests.RequestException as e:
+        logger.error(f"Error fetching weather data: {str(e)}")
+        return f"Error fetching weather data: {str(e)}"
