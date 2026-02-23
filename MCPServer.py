@@ -1,4 +1,4 @@
-# based on https://www.freecodecamp.org/news/how-to-build-your-own-mcp-server-with-python/
+# https://www.freecodecamp.org/news/how-to-build-your-own-mcp-server-with-python/
 
 import logging
 import os
