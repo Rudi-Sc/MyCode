@@ -15,3 +15,9 @@ logger = logging.getLogger(name)
 
 port = int(os.environ.get('PORT', 8080))
 mcp = FastMCP(name, logger=logger, port=port)
+
+@mcp.tool()
+def add(a: int, b: int) -> int:
+    """Add two numbers"""
+    logger.info(f"Tool called: add({a}, {b})")
+    return a + b
