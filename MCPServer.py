@@ -16,7 +16,9 @@ logging.basicConfig(
 logger = logging.getLogger(name)
 
 port = int(os.environ.get('PORT', 8080))
-mcp = FastMCP(name, logger=logger, port=port)
+# mcp = FastMCP(name, logger=logger, port=port)
+
+mcp = FastMCP(name="My Server")
 
 @mcp.tool()
 def add(a: int, b: int) -> int:
