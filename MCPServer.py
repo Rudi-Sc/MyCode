@@ -21,3 +21,9 @@ def add(a: int, b: int) -> int:
     """Add two numbers"""
     logger.info(f"Tool called: add({a}, {b})")
     return a + b
+
+@mcp.tool()
+def get_secret_word() -> str:
+    """Get a random secret word"""
+    logger.info("Tool called: get_secret_word()")
+    return random.choice(["apple", "banana", "cherry"])
