@@ -12,3 +12,6 @@ logging.basicConfig(
     handlers=[logging.StreamHandler()]
 )
 logger = logging.getLogger(name)
+
+port = int(os.environ.get('PORT', 8080))
+mcp = FastMCP(name, logger=logger, port=port)
