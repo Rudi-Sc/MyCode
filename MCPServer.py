@@ -32,7 +32,7 @@ def get_secret_word() -> str:
 def get_current_weather(city: str) -> str:
     """Get current weather for a city"""
     logger.info(f"Tool called: get_current_weather({city})")
-try:
+    try:
         endpoint = "https://wttr.in"
         response = requests.get(f"{endpoint}/{city}", timeout=10)
         response.raise_for_status()
@@ -40,3 +40,14 @@ try:
     except requests.RequestException as e:
         logger.error(f"Error fetching weather data: {str(e)}")
         return f"Error fetching weather data: {str(e)}"
+
+if __name__ == "__main__":
+    logger.info(f"Starting MCP Server on port {port}...")
+    try:
+        mcp.run(transport="sse")
+    except Exception as e:
+        logger.error(f"Server error: {str(e)}")
+        sys.exit(1)
+    finally:
+        logger.info("Server terminated")
+    
