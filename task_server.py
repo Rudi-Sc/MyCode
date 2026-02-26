@@ -24,3 +24,14 @@ def add_task(title: str, description: str = "") -> dict:
     task_id_counter += 1
     
     return task
+
+@mcp.tool()
+def complete_task(task_id: int) -> dict:
+    """Mark a task as completed."""
+    for task in tasks:
+        if task["id"] == task_id:
+            task["status"] = "completed"
+            task["completed_at"] = datetime.now().isoformat()
+            return task
+    
+    return {"error": f"Task {task_id} not found"}
