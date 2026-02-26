@@ -40,8 +40,6 @@ def complete_task(task_id: int) -> dict:
 
 @mcp.resource("tasks://all")
 
-if __name__ == "__main__":
-    mcp.run()
 
 @mcp.prompt()
 def task_summary_prompt() -> str:
@@ -86,3 +84,6 @@ def get_all_tasks() -> str:
         result += f"   Created: {task['created_at']}\n\n"
     
     return result
+
+if __name__ == "__main__":
+    mcp.run()
