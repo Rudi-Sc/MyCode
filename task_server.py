@@ -35,3 +35,20 @@ def complete_task(task_id: int) -> dict:
             return task
     
     return {"error": f"Task {task_id} not found"}
+
+@mcp.resource("tasks://all")
+def get_all_tasks() -> str:
+    """Get all tasks as formatted text."""
+    if not tasks:
+        return "No tasks found"
+    
+    result = "Current Tasks:\n\n"
+    for task in tasks:
+        status_emoji = "✅" if task["status"] == "completed" else "⏳"
+        result += f"{status_emoji} [{task['id']}] {task['title']}\n"
+        if task["description"]:
+            result += f"   Description: {task['description']}\n"
+        result += f"   Status: {task['status']}\n"
+        result += f"   Created: {task['created_at']}\n\n"
+    
+    return result
