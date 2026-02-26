@@ -38,6 +38,9 @@ def complete_task(task_id: int) -> dict:
 
 @mcp.resource("tasks://all")
 
+if __name__ == "__main__":
+    mcp.run()
+
 @mcp.prompt()
 def task_summary_prompt() -> str:
     """Generate a prompt for summarizing tasks."""
