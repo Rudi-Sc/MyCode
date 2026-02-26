@@ -38,6 +38,18 @@ def complete_task(task_id: int) -> dict:
 
 @mcp.resource("tasks://all")
 
+@mcp.prompt()
+def task_summary_prompt() -> str:
+    """Generate a prompt for summarizing tasks."""
+    return """Please analyze the current task list and provide:
+
+1. Total number of tasks (completed vs pending)
+2. Any overdue or high-priority items
+3. Suggested next actions
+4. Overall progress assessment
+
+Use the tasks://all resource to access the complete task list."""
+
 @mcp.resource("tasks://pending")
 def get_pending_tasks() -> str:
     """Get only pending tasks."""
