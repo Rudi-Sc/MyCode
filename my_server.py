@@ -1,3 +1,5 @@
+# https://gofastmcp.com/getting-started/quickstart
+
 from fastmcp import FastMCP
 # Instantiate the server
 mcp = FastMCP("My MCP Server")
