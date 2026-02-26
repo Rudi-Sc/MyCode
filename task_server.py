@@ -1,3 +1,5 @@
+#https://machinelearningmastery.com/building-a-simple-mcp-server-in-python/
+
 from fastmcp import FastMCP
 from datetime import datetime
 
