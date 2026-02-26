@@ -2,13 +2,30 @@
 #https://gofastmcp.com/getting-started/quickstart
 
 import asyncio
-from fastmcp import Client
+from fastmcp import Client, FastMCP
 
-client = Client("http://localhost:8000/mcp")
+# In-memory server (ideal for testing)
+server = FastMCP("TestServer")
+client = Client(server)
 
-async def call_tool(name: str):
+# HTTP server
+client = Client("https://example.com/mcp")
+
+# Local Python script
+client = Client("my_server.py")
+
+async def main():
     async with client:
-        result = await client.call_tool("greet", {"name": name})
+        # Basic server interaction
+        await client.ping()
+
+        # List available operations
+        tools = await client.list_tools()
+        resources = await client.list_resources()
+        prompts = await client.list_prompts()
+
+        # Execute operations
+        result = await client.call_tool("example_tool", {"param": "value"})
         print(result)
 
-asyncio.run(call_tool("Ford"))
+asyncio.run(main())
