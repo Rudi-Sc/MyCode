@@ -37,6 +37,23 @@ def complete_task(task_id: int) -> dict:
     return {"error": f"Task {task_id} not found"}
 
 @mcp.resource("tasks://all")
+
+@mcp.resource("tasks://pending")
+def get_pending_tasks() -> str:
+    """Get only pending tasks."""
+    pending = [t for t in tasks if t["status"] == "pending"]
+    
+    if not pending:
+        return "No pending tasks!"
+    
+    result = "Pending Tasks:\n\n"
+    for task in pending:
+        result += f"⏳ [{task['id']}] {task['title']}\n"
+        if task["description"]:
+            result += f"   {task['description']}\n"
+        result += "\n"
+    
+    return result
 def get_all_tasks() -> str:
     """Get all tasks as formatted text."""
     if not tasks:
