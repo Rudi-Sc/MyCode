@@ -9,4 +9,3 @@ async def call_tool(name: str):
         print(result)
 
 asyncio.run(call_tool("Rodin"))
-``
