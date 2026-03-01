@@ -1,28 +1,18 @@
 import asyncio
-from fastmcp import Client, FastMCP
+from fastmcp import Client
 
-# In-memory server (ideal for testing)
-server = FastMCP("TestServer")
-client = Client(server)
-
-# HTTP server
 client = Client("http://localhost:8000/mcp")
 
-# Local Python script
-# client = Client("my_mcp_server.py")
-
-async def main():
+async def call_tool(name: str):
     async with client:
-        # Basic server interaction
-        await client.ping()
+        result = await client.call_tool("greet", {"name": name})
+        print(result)
 
-        # List available operations
-        tools = await client.list_tools()
-        resources = await client.list_resources()
-        prompts = await client.list_prompts()
+asyncio.run(call_tool("Rodin"))
 
-        # Execute operations
-        # result = await client.call_tool("example_tool", {"param": "value"})
-        # print(result)
 
-asyncio.run(main())
+# After initializing and connecting 'session'
+tools_response = await session.list_tools()
+print("Available tools:")
+for tool in tools_response.tools:
+    print(f" - {tool.name}: {tool.description}")
