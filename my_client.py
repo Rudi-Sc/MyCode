@@ -1,18 +1,22 @@
 import asyncio
-from fastmcp import Client
+from mcp import ClientSession, StdioServerParameters
+from mcp.client.stdio import stdio_client
 
-client = Client("http://localhost:8000/mcp")
+async def main():
+    # Define server parameters for stdio connection
+    server_params = StdioServerParameters(
+        command="python",
+        args=["my_server.py"]
+    )
 
-async def call_tool(name: str):
-    async with client:
-        result = await client.call_tool("greet", {"name": name})
-        print(result)
+    # Start the stdio client and get the read/write streams for communication
+    async with stdio_client(server_params) as (read, write):
+        # Create a client session using the communication streams
+        async with ClientSession(read, write) as session:
+            # Initialize the connection
+            await session.initialize()
 
-asyncio.run(call_tool("Rodin"))
+            # Client-Server interactions go here...
 
-
-# After initializing and connecting 'session'
-tools_response = await session.list_tools()
-print("Available tools:")
-for tool in tools_response.tools:
-    print(f" - {tool.name}: {tool.description}")
+if __name__ == "__main__":
+    asyncio.run(main())
