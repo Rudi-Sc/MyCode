@@ -1,0 +1,28 @@
+kind: Redis
+apiVersion: redis.redis.opstreelabs.in/v1beta1
+metadata:
+  name: redis-standalone
+  namespace: default
+spec:
+  kubernetesConfig:
+    image: 'artifactory.rafael.co.il:6001/quay.io/opstree/redis:v6.2.20'
+    imagePullPolicy: IfNotPresent
+    imagePullSecrets:
+      - name: tsgs-registry
+  storage:
+    volumeClaimTemplate:
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+  redisExporter:
+    enabled: true
+    image: 'artifactory.rafael.co.il:6001/quay.io/opstree/redis-exporter:v1.44.0'
+    imagePullPolicy: IfNotPresent
+    imagePullSecrets:
+      - name: tsgs-registry
+  securityContext:
+    runAsUser: 1000
+    fsGroup: 1000
