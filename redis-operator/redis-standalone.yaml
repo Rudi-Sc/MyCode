@@ -35,9 +35,8 @@ spec:
     runAsUser: 1000
     fsGroup: 1000
   redisConfig:
-    save 10 1
-    stop-writes-on-bgsave-error yes
-    rdbcompression yes
-    rdbchecksum yes
-    notify-keyspace-events EKxh
-
+    # save 10 1
+    # stop-writes-on-bgsave-error yes
+    # rdbcompression yes
+    # rdbchecksum yes
+    notify-keyspace-events: "EKxh"

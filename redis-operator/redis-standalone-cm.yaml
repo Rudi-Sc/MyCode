@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: redis-standalone
+  namespace: default
+data:
+  redis.conf: |
+    save 10 1
+    stop-writes-on-bgsave-error yes
+    rdbcompression yes
+    rdbchecksum yes
+    notify-keyspace-events EKxh
