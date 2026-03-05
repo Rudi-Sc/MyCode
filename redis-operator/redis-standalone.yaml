@@ -21,8 +21,6 @@ spec:
     enabled: true
     image: 'artifactory.rafael.co.il:6001/quay.io/opstree/redis-exporter:v1.44.0'
     imagePullPolicy: IfNotPresent
-    imagePullSecrets:
-      - name: tsgs-registry
   securityContext:
     runAsUser: 1000
     fsGroup: 1000
