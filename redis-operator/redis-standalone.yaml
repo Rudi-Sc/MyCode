@@ -5,12 +5,7 @@ metadata:
   namespace: default
 spec:
   redisConfig:
-    additionalRedisConfig: |
-      save 10 1
-      stop-writes-on-bgsave-error yes
-      rdbcompression yes
-      rdbchecksum no
-      notify-keyspace-events EKxh
+    additionalRedisConfig: redis-config-cm
   kubernetesConfig:
     image: 'artifactory.rafael.co.il:6001/opstree/redis:v6.2.20'
     imagePullPolicy: IfNotPresent
