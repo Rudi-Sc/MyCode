@@ -9,6 +9,16 @@ spec:
     imagePullPolicy: IfNotPresent
     imagePullSecrets:
       - name: tsgs-registry
+    resources:
+      requests:
+        cpu: 1000m
+        memory: 2Gi
+      limits:
+        cpu: 2000m
+        memory: 4Gi
+    redisSecret:
+      name: redis-secret
+      key: password
   storage:
     volumeClaimTemplate:
       spec:
@@ -24,3 +34,10 @@ spec:
   securityContext:
     runAsUser: 1000
     fsGroup: 1000
+  redisConfig:
+    save 10 1
+    stop-writes-on-bgsave-error yes
+    rdbcompression yes
+    rdbchecksum yes
+    notify-keyspace-events EKxh
+

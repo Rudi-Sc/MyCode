@@ -4,6 +4,7 @@ How to see what everything your server offers (tools, resources, and prompts) is
 fastmcp list my_server.py
 
 fastmcp list my_server.py --resources
+fastmcp list my_server.py --prompts
 
 using key:value
 fastmcp call my_server.py add a=10 b=5
