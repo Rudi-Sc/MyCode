@@ -1,0 +1,33 @@
+kind: RedisSentinel
+apiVersion: redis.redis.opstreelabs.in/v1beta1
+metadata:
+  name: redis-sentinel
+  namespace: default
+spec:
+  clusterSize: 3
+  securityContext:
+    runAsUser: 1000
+    fsGroup: 1000
+  redisSentinelConfig:
+    redisReplicationName: redis-replication
+  kubernetesConfig:
+    image: 'artifactory.rafael.co.il:6001/opstree/redis:v6.2.20'
+    imagePullPolicy: IfNotPresent
+    imagePullSecrets:
+      - name: tsgs-registry
+    redisSecret:
+      name: redis-secret
+      key: password
+    resources:
+      requests:
+        cpu: 1000m
+        memory: 2Gi
+      limits:
+        cpu: 2000m
+        memory: 4Gi
+    redisSecret:
+      name: redis-secret
+      key: password  
+  redisSentinel:
+    redisConfig:
+      additionalRedisConfig: redis-config-cm
