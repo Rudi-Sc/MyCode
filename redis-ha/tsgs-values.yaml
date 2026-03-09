@@ -1,0 +1,72 @@
+## Globally shared configuration
+global:
+  # -- Default priority class for all components
+  priorityClassName: ""
+  # -- Openshift compatibility options
+  compatibility:
+    openshift:
+      adaptSecurityContext: auto
+
+## -- Image information for Redis HA
+## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+##
+image:
+  # -- Redis image repository
+  repository: public.ecr.aws/docker/library/redis
+  # -- Redis image tag
+  tag: 7.4.8
+  # -- Redis image pull policy
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: []
+# - name: "image-pull-secret"
+
+# -- Number of redis master/slave
+replicas: 3
+
+
+## Redis specific configuration options
+redis:
+  config:
+    save: "10 1"
+    stop-writes-on-bgsave-error: "yes"
+    rdbcompression: "yes"
+    rdbchecksum: "yes"
+    notify-keyspace-events: "EKxh"
+
+  # -- CPU/Memory for master/slave nodes resource requests/limits
+  resources: 
+    requests:
+      memory: 200Mi
+      cpu: 100m
+    limits:
+      memory: 700Mi
+
+auth: true
+redisPassword: "tsgspasswd"
+
+sentinel:
+  # -- CPU/Memory for sentinel node resource requests/limits
+  resources: 
+    requests:
+      memory: 200Mi
+      cpu: 100m
+    limits:
+      memory: 200Mi 
+  
+  auth: true
+  password: "tsgspasswd"
+
+persistentVolume:
+  # -- Enable persistent volume
+  enabled: true
+  storageClass: trident-csi
+  # -- Persistent volume access modes
+  accessModes:
+    - ReadWriteOnce
+  # -- Persistent volume size
+  size: 10Gi
+  # -- Annotations for the volume
+  annotations: {}
+  # -- Labels for the volume
+  labels: {}
