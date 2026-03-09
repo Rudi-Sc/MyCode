@@ -4,12 +4,12 @@ metadata:
   name: redis-sentinel
   namespace: default
 spec:
-  clusterSize: 3
+  clusterSize: 3      
   securityContext:
     runAsUser: 1000
     fsGroup: 1000
   redisSentinelConfig:
-    redisReplicationName: redis-replication
+    redisReplicationName: redis-replication    
   kubernetesConfig:
     image: 'artifactory.rafael.co.il:6001/opstree/redis:v6.2.20'
     imagePullPolicy: IfNotPresent
@@ -28,6 +28,3 @@ spec:
     redisSecret:
       name: redis-secret
       key: password  
-  redisSentinel:
-    redisConfig:
-      additionalRedisConfig: redis-config-cm
