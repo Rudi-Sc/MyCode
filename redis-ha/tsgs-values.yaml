@@ -12,14 +12,14 @@ global:
 ##
 image:
   # -- Redis image repository
-  repository: public.ecr.aws/docker/library/redis
+  repository: artifactory.rafael.co.il:6001/redis:7.4.8
   # -- Redis image tag
   tag: 7.4.8
   # -- Redis image pull policy
   pullPolicy: IfNotPresent
 
-imagePullSecrets: []
-# - name: "image-pull-secret"
+imagePullSecrets: 
+- name: "tsgs-registry"
 
 # -- Number of redis master/slave
 replicas: 3
@@ -70,3 +70,20 @@ persistentVolume:
   annotations: {}
   # -- Labels for the volume
   labels: {}
+
+exporter:
+  # -- If `true`, the prometheus exporter sidecar is enabled
+  enabled: true
+  # -- Exporter image
+  image: artifactory.rafael.co.il:6001/oliver006/redis_exporter
+  # -- Exporter image tag
+  tag: v1.80.2
+  # -- Exporter image pullPolicy
+  pullPolicy: IfNotPresent
+
+  # -- Exporter port
+  port: &exporter_port 9121
+  # -- Exporter port name
+  portName: exporter-port
+  # -- Exporter scrape path
+  scrapePath: &exporter_scrapePath /metrics
