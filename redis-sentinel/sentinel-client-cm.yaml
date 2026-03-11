@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sentinel-client-cm
+  namespace: redis-ha
+data:
+  sentinel-client.py: |
+    import os
+    import sys
+    import time
+    from datetime import datetime
+    from redis.sentinel import Sentinel
+
+    def monitor_redis():
+        # Configuration from Environment Variables
+        sentinel_host = os.getenv("SENTINEL_HOST", "redis-sentinel")
+        sentinel_port = int(os.getenv("SENTINEL_PORT", 26379))
+        sentinel_password = os.getenv("SENTINEL_PASSWORD", "sentinel_password")
+        master_name = os.getenv("MASTER_NAME", "mymaster")
+        interval = int(os.getenv("CHECK_INTERVAL", "10"))
+
+        print(f"Starting Monitor: {sentinel_host}:{sentinel_port} every {interval}s")
+
+        while True:
+            now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            try:
+                # 1. Connect to Sentinel
+                sentinel = Sentinel([(sentinel_host, sentinel_port)], socket_timeout=0.5,sentinel_kwargs={'password': sentinel_password})
+
+                # 2. Discover Master & Slaves
+                master_addr = sentinel.discover_master(master_name)
+                slaves = sentinel.discover_slaves(master_name)
+
+                print(f"[{now}] OK: Master '{master_name}' at {master_addr}. Replicas: {len(slaves)}")
+
+            except Exception as e:
+                print(f"[{now}] ERROR: {e}")
+
+            # Wait before next check
+            time.sleep(interval)
+
+    if __name__ == "__main__":
+        monitor_redis()

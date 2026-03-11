@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: python-sentinel-client
+  namespace: redis-ha
+spec:
+  containers:
+  - name: monitor
+    image: artifactory.rafael.co.il:6001/python:3.11-slim
+    resources:
+      requests:
+        memory: "64Mi"   # Guaranteed minimum RAM
+        cpu: "50m"       # Guaranteed minimum CPU (0.05 core)
+      limits:
+        memory: "128Mi"  # Maximum RAM allowed
+        cpu: "100m"      # Maximum CPU allowed (0.1 core)
+    env:
+    - name: SENTINEL_HOST
+      value: "redis-ha"
+    - name: SENTINEL_PASSWORD 
+      value: "tsgspasswd"
+    - name: MASTER_NAME
+      value: "mymaster"
+    - name: PYTHONUNBUFFERED
+      value: "1"
+    command: ["/bin/sh", "-c"]
+    args:
+      - |
+        pip install redis && 
+        python /scripts/sentinel-client.py
+    volumeMounts:
+    - name: code-vol
+      mountPath: /scripts
+  volumes:
+  - name: code-vol
+    configMap:
+      name: sentinel-client-cm
+  restartPolicy: Never
+  imagePullSecrets:
+  - name: tsgs-registry
