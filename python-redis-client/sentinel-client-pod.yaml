@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: python-monitor
+  name: sentinel-client
 spec:
   containers:
-  - name: monitor
+  - name: client
     image: artifactory.rafael.co.il:6001/python:3.11-slim
     resources:
       requests:
