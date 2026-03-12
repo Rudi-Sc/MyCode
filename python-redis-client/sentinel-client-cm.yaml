@@ -32,7 +32,6 @@ data:
             password=sentinel_password,
             decode_responses=True  # Return strings instead of bytes
         )
-
         # Get a slave connection (optional, for read operations)
         slave = sentinel.slave_for(
             service_name=master_name,
