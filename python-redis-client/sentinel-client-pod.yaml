@@ -26,14 +26,14 @@ spec:
     args:
       - |
         pip install redis && 
-        python /scripts/python-monitor.py
+        python /scripts/sentinel-client.py
     volumeMounts:
     - name: code-vol
       mountPath: /scripts
   volumes:
   - name: code-vol
     configMap:
-      name: sentinel-monitor-cm
+      name: sentinel-sentinel-cm
   restartPolicy: Never
   imagePullSecrets:
   - name: tsgs-registry
