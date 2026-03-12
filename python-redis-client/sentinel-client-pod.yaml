@@ -1,8 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: python-sentinel-client
-  namespace: redis-ha
+  name: python-monitor
 spec:
   containers:
   - name: monitor
@@ -27,14 +26,14 @@ spec:
     args:
       - |
         pip install redis && 
-        python /scripts/sentinel-client.py
+        python /scripts/python-monitor.py
     volumeMounts:
     - name: code-vol
       mountPath: /scripts
   volumes:
   - name: code-vol
     configMap:
-      name: sentinel-client-cm
+      name: sentinel-monitor-cm
   restartPolicy: Never
   imagePullSecrets:
   - name: tsgs-registry

@@ -1,10 +1,9 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: sentinel-client-cm
-  namespace: redis-ha
+  name: sentinel-monitor-cm
 data:
-  sentinel-client.py: |
+  python-monitor.py: |
     import os
     import sys
     import time
