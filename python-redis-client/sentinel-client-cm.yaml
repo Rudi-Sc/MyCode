@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: sentinel-client-cm
 data:
-  python-monitor.py: |
+  sentinel-client.py: |
     import os
     import sys
     import time
@@ -17,19 +17,20 @@ data:
         sentinel_password = os.getenv("SENTINEL_PASSWORD", "sentinel_password")
         master_name = os.getenv("MASTER_NAME", "mymaster")
         interval = int(os.getenv("CHECK_INTERVAL", "10"))
+    
     try:
         # Connect to Sentinel
         sentinel = Sentinel(
             sentinel_host,
             socket_timeout=2,
-            password=password
+            password=sentinel_password
         )
 
         # Get master connection
         master = sentinel.master_for(
             service_name=master_name,
             socket_timeout=2,
-            password=password,
+            password=sentinel_password,
             decode_responses=True  # Return strings instead of bytes
         )
 
@@ -37,7 +38,7 @@ data:
         slave = sentinel.slave_for(
             service_name=master_name,
             socket_timeout=2,
-            password=password,
+            password=sentinel_password,
             decode_responses=True
         )
 
