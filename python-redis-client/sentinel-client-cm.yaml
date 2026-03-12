@@ -21,11 +21,10 @@ data:
     try:
         # Connect to Sentinel
         sentinel = Sentinel(
-            sentinel_host,
+            [(sentinel_host, sentinel_port)],
             socket_timeout=2,
-            password=sentinel_password
+            sentinel_kwargs={'password': sentinel_password})
         )
-
         # Get master connection
         master = sentinel.master_for(
             service_name=master_name,
